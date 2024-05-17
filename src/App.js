@@ -51,13 +51,16 @@ const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 const KEY = "64e8720c";
-const query = "fsfafa";
+const query = "oldboy";
 
 export default function App() {
+  const [query, setQuery] = useState("");
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const tempQuery = "intersterllar";
+
   useEffect(function () {
     async function fetchMovies() {
       try {
@@ -69,7 +72,6 @@ export default function App() {
         if (!res.ok)
           throw new Error("Something went wrong with fetching movies");
         const data = await res.json();
-        console.log(data);
         if (data.Response === "False") throw new Error("Movie not found");
         setMovies(data.Search);
         console.log(data.Search);
@@ -86,7 +88,7 @@ export default function App() {
   return (
     <>
       <NavBar>
-        <Search />
+        <Search query={query} setQuery={setQuery} />
         <NumResults movies={movies} />
       </NavBar>
 
@@ -138,9 +140,7 @@ function Logo() {
   );
 }
 
-function Search() {
-  const [query, setQuery] = useState("");
-
+function Search({ query, setQuery }) {
   return (
     <input
       className="search"
