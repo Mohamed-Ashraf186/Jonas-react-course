@@ -124,7 +124,7 @@ function CreateOrder() {
             name="position"
             value={
               position.longitude && position.latitude
-                ? `${(position.latitude, position.longitude)}`
+                ? `${position.latitude},${position.longitude}`
                 : ''
             }
           />
@@ -149,8 +149,7 @@ export async function action({ request }) {
     priority: data.priority === 'true',
   };
 
-  console.log('data', data);
-
+  console.log(order);
   const errors = {};
 
   if (!isValidPhone(order.phone)) {
